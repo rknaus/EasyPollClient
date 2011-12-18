@@ -1,0 +1,12 @@
+== About Easy Poll Client
+
+Easy Poll Client is an Android application to attend polls.
+
+The application will be realized to process the simple text format of a 
+server application (Easy Poll Server) and display the polls and their 
+questions on a smart phone. The smart phone user can enter
+her/his answers and post them to the server application.
+
+
+The project is subject of an assignment. Further the authors get familiar
+with Android software development.
