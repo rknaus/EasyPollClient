@@ -1,9 +1,10 @@
 package ch.netgeek.easypollclient;
 
+import ch.netgeek.easypollclient.settings.SettingsActivity;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 public class EasyPollClientActivity extends Activity {
@@ -12,29 +13,14 @@ public class EasyPollClientActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        Button listPollsButton = (Button) findViewById(R.id.button_list_polls);
-        listPollsButton.setOnClickListener(
-                new View.OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(EasyPollClientActivity.this, 
-                                "List Polls...", Toast.LENGTH_LONG).show();
-                        
-                    }
-                });
-        
-        Button userSettingsButton = (Button) findViewById(R.id.button_user_settings);
-        userSettingsButton.setOnClickListener(
-                new View.OnClickListener() {
-                    
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(EasyPollClientActivity.this, 
-                                "User Settings...", Toast.LENGTH_LONG).show();
-                        
-                    }
-                });
+    }
+    
+    public void polls(View v) {
+        Toast.makeText(EasyPollClientActivity.this, 
+                "List Polls...", Toast.LENGTH_LONG).show();
+    }
+    
+    public void settings(View v) {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 }

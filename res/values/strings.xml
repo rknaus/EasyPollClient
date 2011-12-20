@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, EasyPollClientActivity!</string>
     <string name="app_name">EasyPollClient</string>
+    <string name="settings_cancel_button">Cancel</string>
+    <string name="settings_save_button">Save</string>
+    <string name="settings_title_text">Settings</string>
+    <string name="settings_url_text">URL:</string>
+    <string name="settings_username_text">Username:</string>
+    <string name="settings_password_text">Password:</string>
 </resources>

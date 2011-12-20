@@ -4,6 +4,8 @@
       android:versionCode="1"
       android:versionName="1.0">
     <uses-sdk android:minSdkVersion="7" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".EasyPollClientActivity"
@@ -12,6 +14,12 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".settings.SettingsActivity">
+            <intent-filter>
+                <action android:name="de.flavor.android.MYACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>  
         </activity>
 
     </application>

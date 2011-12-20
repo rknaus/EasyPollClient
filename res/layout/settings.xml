@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+    
+    <TextView 
+        android:id="@+id/text_view_settings_title" 
+        android:text="@string/settings_title_text"  
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent" 
+        android:padding="4dip">
+    </TextView>
+    
+    <TextView 
+        android:id="@+id/text_view_settings_url" 
+        android:text="@string/settings_url_text" 
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent" 
+        android:padding="4dip">
+    </TextView>
+    
+    <EditText 
+        android:layout_width="fill_parent" 
+        android:id="@+id/edit_text_settings_url" 
+        android:layout_height="wrap_content">
+        <requestFocus></requestFocus>
+    </EditText>
+    
+    <TextView 
+        android:id="@+id/text_view_settings_username" 
+        android:text="@string/settings_username_text" 
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent" 
+        android:padding="4dip">
+    </TextView>
+    
+    <EditText 
+        android:layout_width="fill_parent" 
+        android:id="@+id/edit_text_settings_username" 
+        android:layout_height="wrap_content">
+    </EditText>
+    
+    <TextView 
+        android:id="@+id/text_view_settings_password" 
+        android:text="@string/settings_password_text" 
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent" 
+        android:padding="4dip">
+    </TextView>
+    
+    <EditText 
+        android:layout_width="fill_parent" 
+        android:id="@+id/edit_text_settings_password" 
+        android:inputType="textPassword"
+        android:layout_height="wrap_content">
+    </EditText>
+    
+    <LinearLayout 
+        android:id="@+id/linear_layout_settings_buttons"
+        android:layout_height="wrap_content"  
+        android:layout_width="fill_parent" 
+        android:paddingTop="20dip">
+    <Button
+        android:id="@+id/button_settings_cancel"
+        android:text="@string/settings_cancel_button"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent" 
+        android:layout_weight="1"
+        android:padding="4dip"
+        android:onClick="cancel">
+    </Button>
+    
+    <Button
+        android:layout_width="fill_parent"
+        android:id="@+id/button_settings_save"
+        android:text="@string/settings_save_button"
+        android:layout_height="wrap_content" 
+        android:layout_weight="1"
+        android:padding="4dip"
+        android:onClick="save">
+    </Button>
+    
+</LinearLayout>
+    
+    
+</LinearLayout>
