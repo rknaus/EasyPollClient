@@ -43,6 +43,20 @@ public class Setting implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public boolean isValid() {
+        boolean valid = true;
+        if (getServerUrl() == null || getServerUrl().equals("")) {
+            valid = false;
+        }
+        if (getUsername() == null || getUsername().equals("")) {
+            valid = false;
+        }
+        if (getPassword() == null || getPassword().equals("")) {
+            valid = false;
+        }
+        return valid;
+    }
 
     @Override
     public String toString() {

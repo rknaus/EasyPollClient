@@ -8,7 +8,7 @@
             android:id="@+id/button_list_polls" 
             android:layout_width="fill_parent" 
             android:layout_height="wrap_content"
-            >
+            android:onClick="polls">
     </Button>
     <Button android:text="Settings" 
             android:id="@+id/button_settings" 
