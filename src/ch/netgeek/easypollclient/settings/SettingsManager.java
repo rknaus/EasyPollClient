@@ -21,9 +21,6 @@ public class SettingsManager {
         
         setFileName(context.getFilesDir() + "/" + "settings.dat");
         
-        //TODO DELETE
-        Log.d("demo", getFileName());
-        
         if (!(new File(getFileName()).exists())) {
             writeSettings(new Setting());
         }

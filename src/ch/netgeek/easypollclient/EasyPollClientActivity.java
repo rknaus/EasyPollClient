@@ -1,13 +1,14 @@
 package ch.netgeek.easypollclient;
 
+import ch.netgeek.easypollclient.polls.PollsActivity;
 import ch.netgeek.easypollclient.settings.Setting;
 import ch.netgeek.easypollclient.settings.SettingsActivity;
 import ch.netgeek.easypollclient.settings.SettingsManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class EasyPollClientActivity extends Activity {
     
@@ -23,12 +24,10 @@ public class EasyPollClientActivity extends Activity {
         SettingsManager settingsManager = new SettingsManager(this);
         Setting setting = settingsManager.readSettings();
         if (setting != null && setting.isValid()) {
-            getPollsList();
+            startActivity(new Intent(this, PollsActivity.class));
+        } else {
+            Toast.makeText(this, "Please complete the settings", Toast.LENGTH_LONG).show();
         }
-    }
-    
-    private void getPollsList() {
-        Log.d("demo", "GETTING POLLS LIST");
     }
     
     public void settings(View v) {
