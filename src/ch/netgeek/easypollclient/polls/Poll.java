@@ -9,11 +9,22 @@ public class Poll {
     private String title;
     private Date publishedAt;
     private String category;
-    private int userId;
     private String userName;
     private int questionsCount;
     private int participationsCount;
     private ArrayList<Question> questions;
+    
+    public Poll(int pollId, String title, Date publishedAt, String category, 
+            String userName, int questionsCount, int participationsCount) {
+        
+        setPollId(pollId);
+        setTitle(title);
+        setPublishedAt(publishedAt);
+        setCategory(category);
+        setUserName(userName);
+        setQuestionsCount(questionsCount);
+        setParticipationsCount(participationsCount);
+    }
     
     public void addQuestion(Question question) {
         if (questions == null) {
@@ -54,14 +65,6 @@ public class Poll {
         this.category = category;
     }
     
-    public int getUserId() {
-        return userId;
-    }
-    
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    
     public String getUserName() {
         return userName;
     }
@@ -93,5 +96,15 @@ public class Poll {
     public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
     }
+
+    @Override
+    public String toString() {
+        return "Poll [pollId=" + pollId + ", title=" + title + ", publishedAt="
+                + publishedAt + ", category=" + category + ", userName="
+                + userName + ", questionsCount=" + questionsCount
+                + ", participationsCount=" + participationsCount + "]";
+    }
+    
+    
     
 }
