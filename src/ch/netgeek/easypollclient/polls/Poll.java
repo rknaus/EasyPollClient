@@ -8,13 +8,12 @@ public class Poll {
     private int pollId;
     private String title;
     private Date publishedAt;
-    private Date closedAt;
-    private Date createdAt;
-    private Date updatedAt;
     private String category;
     private int userId;
     private String userName;
-    ArrayList<Question> questions;
+    private int questionsCount;
+    private int participationsCount;
+    private ArrayList<Question> questions;
     
     public void addQuestion(Question question) {
         if (questions == null) {
@@ -47,30 +46,6 @@ public class Poll {
         this.publishedAt = publishedAt;
     }
     
-    public Date getClosedAt() {
-        return closedAt;
-    }
-    
-    public void setClosedAt(Date closedAt) {
-        this.closedAt = closedAt;
-    }
-    
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-    
     public String getCategory() {
         return category;
     }
@@ -93,6 +68,22 @@ public class Poll {
     
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    
+    public int getQuestionsCount() {
+        return questionsCount;
+    }
+
+    public void setQuestionsCount(int questionsCount) {
+        this.questionsCount = questionsCount;
+    }
+
+    public int getParticipationsCount() {
+        return participationsCount;
+    }
+
+    public void setParticipationsCount(int participationsCount) {
+        this.participationsCount = participationsCount;
     }
     
     public ArrayList<Question> getQuestions() {
