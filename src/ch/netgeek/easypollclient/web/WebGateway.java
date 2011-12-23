@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthenticationException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -17,6 +18,7 @@ import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.DefaultRequestDirector;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
@@ -36,6 +38,7 @@ public class WebGateway {
     private String password;
     private DefaultHttpClient httpclient;
     private CookieStore cookieStore;
+    private HttpContext localContext;
     
     public WebGateway(Context context) {
         SettingsManager settingsManager = new SettingsManager(context);
@@ -46,54 +49,61 @@ public class WebGateway {
         
         httpclient = new DefaultHttpClient();
         cookieStore = new BasicCookieStore();
-        httpclient.setCookieStore(cookieStore);
+        localContext = new BasicHttpContext();
+        localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
         
-        login();
+        if (login() == false) {
+            Log.d("demo", "Login FAILED");
+        }
         
+        ArrayList<Poll> polls = getPolls();
     }
     
-    private void login() {
-        
-        HttpPost httppost = new HttpPost(serverUrl + "users/sign_in.xml");
-        
-        Log.d("demo", httppost.getURI().toString());
-        
-        HttpResponse response = null;
-        
+    private boolean login() {
+
         try {
+            
+            HttpPost httppost = new HttpPost(serverUrl + "users/sign_in.xml");
             
             // Adding the user data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("user[email]", username));
             nameValuePairs.add(new BasicNameValuePair("user[password]", password));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            
-            // Preparing HTTP response
-            CookieStore cookieStore = new BasicCookieStore();
-            HttpContext localContext = new BasicHttpContext();
-            localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
-            
+
             // Execute HTTP post request
-            response = httpclient.execute(httppost, localContext);
+            HttpResponse response = httpclient.execute(httppost, localContext);
+            String xmlResponse = EntityUtils.toString(response.getEntity());
             
-            Cookie sessionCookie = null;
-            
-            List<Cookie> cookies = cookieStore.getCookies();
-            for (int i = cookies.size() - 1; i >= 0; i--) {
-                Cookie c = cookies.get(i);
-                Log.d("demo", "comment: " + c.getComment() + ", commentURL: " + c.getCommentURL() + ", domain: " + c.getDomain().toString() + ", expires: " + c.getExpiryDate() + ", name: " + c.getName() + ", path: " + c.getPath() + ", value: " + c.getValue() + ", version: " + c.getVersion());
-                
-                if (c.getName().equals("_session_id")) {
-                    sessionCookie = c;
-                }
-                
+            if (xmlResponse.contains("Invalid email or password")) {
+                return false;
             }
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return false;
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        return true;
+        
+    }
+    
+    public ArrayList<Poll> getPolls() {
+        
+        if (login() == false) {
+            return null;
+        }
+        
+        try {
             
             HttpGet httpget = new HttpGet(serverUrl + "polls.xml");
-            response = httpclient.execute(httpget, localContext);
+            HttpResponse response = httpclient.execute(httpget, localContext);
             Log.d("demo", EntityUtils.toString(response.getEntity()));
-            
-            
+        
         } catch (ClientProtocolException e) {
             e.printStackTrace();
             
@@ -101,22 +111,6 @@ public class WebGateway {
             e.printStackTrace();
         }
         
-        if (response != null) {
-            
-            Log.d("demo", "RESPONSE PARAMETER:" + response.getParams().toString());
-            
-            Header[] header = response.getAllHeaders();
-            for (int i = 0; i < header.length; i++) {
-                Log.d("demo", "Header Name " + i + ": " + header[i].getName());
-                Log.d("demo", "Header Value " + i + ": " + header[i].getValue());
-            }
-            Log.d("demo", response.toString());
-            
-        }
-        
-    }
-    
-    public ArrayList<Poll> getPolls() {
         return null;
     }
     
