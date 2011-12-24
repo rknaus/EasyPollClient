@@ -27,6 +27,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".participations.ParticipationsActivity">
+            <intent-filter>
+                <action android:name="ch.netgeek.easypollclient.PARTICIPATIONS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>
