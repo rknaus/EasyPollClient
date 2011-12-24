@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.netgeek.easypollclient.R;
+import ch.netgeek.easypollclient.participations.ParticipationsActivity;
 import ch.netgeek.easypollclient.web.WebGateway;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,7 +42,9 @@ public class PollsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Log.d("demo", "ListView=" + l.toString() + ", View=" + v.toString() + ", pos=" + position + ", id=" + id);
+        Intent intent = new Intent(this, ParticipationsActivity.class);
+        intent.putExtra("poll_id", polls.get(position).getPollId());
+        startActivity(new Intent(this, PollsActivity.class));
     }
     
     public class MyCustomAdapter extends ArrayAdapter<Poll> {
