@@ -1,17 +1,19 @@
 package ch.netgeek.easypollclient.polls;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Question {
     
     private int questionId;
-    private int pollId;
     private String text;
     private String kind;
-    private Date createdAt;
-    private Date updatedAt;
     private ArrayList<Option> options;
+    
+    public Question(int questionId, String text, String kind) {
+        setQuestionId(questionId);
+        setText(text);
+        setKind(kind);
+    }
     
     public void addOption(Option option) {
         if (options == null) {
@@ -28,14 +30,6 @@ public class Question {
         this.questionId = questionId;
     }
     
-    public int getPollId() {
-        return pollId;
-    }
-    
-    public void setPollId(int pollId) {
-        this.pollId = pollId;
-    }
-    
     public String getText() {
         return text;
     }
@@ -50,22 +44,6 @@ public class Question {
     
     public void setKind(String kind) {
         this.kind = kind;
-    }
-    
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
     }
     
     public ArrayList<Option> getOptions() {
