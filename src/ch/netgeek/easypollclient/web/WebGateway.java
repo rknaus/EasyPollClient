@@ -140,7 +140,11 @@ public class WebGateway {
         String pollQuestionsCountTag = "questions_count";
         String pollParticipationsCountTag = "participations_count";
         
-        Iterator<?> pollIterator = root.getChildren(pollTag).iterator();
+        List<?> pollElementList = root.getChildren(pollTag);
+        if (pollElementList == null) {
+            return null;
+        }
+        Iterator<?> pollIterator = pollElementList.iterator();
         while (pollIterator.hasNext()) {
             Element pollElement = (Element) pollIterator.next();
             
@@ -239,7 +243,16 @@ public class WebGateway {
         
         // Parsing the questions of the poll
         Element questionsElement = root.getChild(questionsTag);
-        Iterator<?> questionIterator = questionsElement.getChildren(questionTag).iterator();
+
+        if (questionsElement == null) {
+            return null;
+        }
+        List<?> questionElementList = questionsElement.getChildren(questionTag);
+        
+        if (questionElementList == null) {
+            return null;
+        }
+        Iterator<?> questionIterator = questionElementList.iterator();
         
         while (questionIterator.hasNext()) {
             Element questionElement = (Element) questionIterator.next();
@@ -251,7 +264,16 @@ public class WebGateway {
             Question question = new Question(questionId, questionText, questionKind);
             
             Element optionsElement = questionElement.getChild(optionsTag);
-            Iterator<?> optionIterator = optionsElement.getChildren(optionTag).iterator();
+            
+            if (optionsElement == null) {
+                return null;
+            }
+            List<?> optionElementList = optionsElement.getChildren(optionTag);
+            
+            if (optionElementList == null) {
+                return null;
+            }
+            Iterator<?> optionIterator = optionElementList.iterator();
             
             // Parsing the options of the question
             while (optionIterator.hasNext()) {

@@ -2,12 +2,16 @@ package ch.netgeek.easypollclient.participations;
 
 import java.util.ArrayList;
 
+import ch.netgeek.easypollclient.EasyPollClientActivity;
 import ch.netgeek.easypollclient.R;
 import ch.netgeek.easypollclient.web.WebGateway;
 import ch.netgeek.easypollclient.polls.*;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 public class ParticipationsActivity extends Activity {
     
@@ -60,6 +64,30 @@ public class ParticipationsActivity extends Activity {
             }
             
         }
+        
+    }
+    
+    private void registerButtonEvents() {
+        Button backButton = (Button) findViewById(R.id.button_participations_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+    }
+    
+    public void back(View v) {
+        
+    }
+    
+    public void cancel(View v) {
+        startActivity(new Intent(this, PollsActivity.class));
+    }
+    
+    public void next(View v) {
         
     }
 }
