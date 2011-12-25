@@ -12,11 +12,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class ParticipationsActivity extends Activity {
     
     private WebGateway webGateway;
+    private Poll poll;
+    private ArrayList<Question> questions;
     private Participation participation;
+    private int currentQuestionIndex;
+    private int lastQuestionIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,69 +31,86 @@ public class ParticipationsActivity extends Activity {
         
         int pollId = getIntent().getIntExtra("poll_id", 0);
         
+        // Getting the requested poll
         webGateway = new WebGateway(this);
-        Poll poll = webGateway.getPoll(pollId);
+        poll = webGateway.getPoll(pollId);
         
         if (poll == null) {
-            Log.d("demo", "POLL IS NULL!!");
-        } else {
-            Log.d("demo", "POLL IS NOT NULL!!");
-            Log.d("demo", "Id: " + String.valueOf(poll.getPollId()));
-            Log.d("demo", "Title: " + poll.getTitle());
-            Log.d("demo", "Published at: " + poll.getPublishedAt().toString());
-            Log.d("demo", "Category: " + poll.getCategory());
-            Log.d("demo", "Username: " + poll.getUserName());
-            Log.d("demo", "Questions Count: " + String.valueOf(poll.getQuestionsCount()));
-            Log.d("demo", "Participations Count: " + String.valueOf(poll.getParticipationsCount()));
-            
-            ArrayList<Question> questions = poll.getQuestions();
-            Log.d("demo", "QUESTIONS: " + questions.size());
-            
-            for (int i = 0; i < questions.size(); i++) {
-                
-            Question question = questions.get(i);
-            
-            Log.d("demo", "  Question Id: " + question.getQuestionId());
-            Log.d("demo", "  Question Text: " + question.getText());
-            Log.d("demo", "  Question Kind: " + question.getKind());
-                
-                ArrayList<Option> options = question.getOptions();
-                Log.d("demo", "OPTIONS: " + options.size());
-                
-                for (int k = 0; k < options.size(); k++) {
-                    Option option = options.get(k);
-                    
-                    Log.d("demo", "    Option Id: " + option.getOptionId());
-                    Log.d("demo", "    Option Text: " + option.getText());
-                }
-                
-            }
-            
+            Toast.makeText(this, "Error displaying the requested poll", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, PollsActivity.class));
         }
+        questions = poll.getQuestions();
+        
+        // Setting the state variables
+        currentQuestionIndex = 0;
+        lastQuestionIndex = poll.getQuestions().size() - 1;
+        
+        // Displaying the GUI
+        displayGui();
         
     }
     
-    private void registerButtonEvents() {
+    private void displayGui() {
+        
+        // Current Question
+        Question question = questions.get(currentQuestionIndex);
+        
+        // Setting the Poll title
+        TextView pollTitle = (TextView) findViewById(R.id.text_view_participations_title);
+        pollTitle.setText(poll.getTitle());
+        
+        // Setting the Question text
+        TextView questionText = (TextView) findViewById(R.id.text_view_participations_question_text);
+        questionText.setText(question.getText());
+        
+        // Setting Button text and event listeners
+        setButtons();
+        
+    }
+    
+    private void setButtons() {
         Button backButton = (Button) findViewById(R.id.button_participations_back);
+        
         backButton.setOnClickListener(new View.OnClickListener() {
             
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+                if (currentQuestionIndex != 0) {
+                    currentQuestionIndex--;
+                    displayGui();
+                }
+                
+            }
+        });
+        
+        Button nextButton = (Button) findViewById(R.id.button_participations_next);
+        
+        if (currentQuestionIndex < lastQuestionIndex) {
+            nextButton.setText("Next");
+        } else {
+            nextButton.setText("Finish");
+        }
+        
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                if (currentQuestionIndex < lastQuestionIndex) {
+                    currentQuestionIndex++;
+                    displayGui();
+                } else {
+                    finishParticipation();
+                }
                 
             }
         });
     }
     
-    public void back(View v) {
-        
+    private void finishParticipation() {
+        Toast.makeText(this, "Finish button pressed", Toast.LENGTH_SHORT).show();
     }
     
     public void cancel(View v) {
         startActivity(new Intent(this, PollsActivity.class));
-    }
-    
-    public void next(View v) {
-        
     }
 }
