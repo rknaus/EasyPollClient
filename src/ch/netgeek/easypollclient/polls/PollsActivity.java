@@ -11,7 +11,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class PollsActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(this, ParticipationsActivity.class);
         intent.putExtra("poll_id", polls.get(position).getPollId());
-        startActivity(new Intent(this, PollsActivity.class));
+        startActivity(intent);
     }
     
     public class MyCustomAdapter extends ArrayAdapter<Poll> {

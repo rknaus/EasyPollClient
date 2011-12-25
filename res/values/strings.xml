@@ -8,4 +8,7 @@
     <string name="settings_username_text">Username:</string>
     <string name="settings_password_text">Password:</string>
     <string name="polls_title_text">Published Polls</string>
+    <string name="participations_back_button">Back</string>
+    <string name="participations_cancel_button">Cancel</string>
+    <string name="participations_next_button">Next</string>
 </resources>

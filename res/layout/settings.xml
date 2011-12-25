@@ -66,27 +66,27 @@
         android:layout_height="wrap_content"  
         android:layout_width="fill_parent" 
         android:paddingTop="20dip">
-    <Button
-        android:id="@+id/button_settings_cancel"
-        android:text="@string/settings_cancel_button"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" 
-        android:layout_weight="1"
-        android:padding="4dip"
-        android:onClick="cancel">
-    </Button>
+        
+        <Button
+            android:id="@+id/button_settings_cancel"
+            android:text="@string/settings_cancel_button"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" 
+            android:layout_weight="1"
+            android:padding="4dip"
+            android:onClick="cancel">
+        </Button>
     
-    <Button
-        android:layout_width="fill_parent"
-        android:id="@+id/button_settings_save"
-        android:text="@string/settings_save_button"
-        android:layout_height="wrap_content" 
-        android:layout_weight="1"
-        android:padding="4dip"
-        android:onClick="save">
-    </Button>
+        <Button
+            android:layout_width="fill_parent"
+            android:id="@+id/button_settings_save"
+            android:text="@string/settings_save_button"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1"
+            android:padding="4dip"
+            android:onClick="save">
+        </Button>
     
-</LinearLayout>
-    
-    
+    </LinearLayout>
+
 </LinearLayout>
