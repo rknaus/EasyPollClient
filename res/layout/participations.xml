@@ -30,50 +30,7 @@
             android:id="@+id/linear_layout_participations_question_options"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            
-            <RadioGroup 
-                android:id="@+id/radio_group_participations_question_options"  
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
-                
-                <RadioButton 
-                    android:id="@+id/radio_participations_question_options_0" 
-                    android:layout_height="wrap_content"  
-                    android:layout_width="fill_parent"
-                    android:checked="true" 
-                    android:text="o1" />
-                <RadioButton 
-                    android:id="@+id/radio_participations_question_options_1" 
-                    android:layout_height="wrap_content"  
-                    android:layout_width="fill_parent"
-                    android:text="o2" />
-                <RadioButton 
-                    android:id="@+id/radio_participations_question_options_2" 
-                    android:layout_height="wrap_content" 
-                    android:layout_width="fill_parent" 
-                    android:text="o3"/>
-            </RadioGroup>
-            
-            <CheckBox 
-                android:id="@+id/check_participations_question_options_0"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:text="o1" />
-            
-            <CheckBox 
-                android:id="@+id/check_participations_question_options_1"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:text="o2" />
-        
-            <CheckBox 
-                android:id="@+id/check_participations_question_options_2"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:text="o3" />
-        
-        </LinearLayout>
+            android:orientation="vertical" />
         
     </ScrollView>
     

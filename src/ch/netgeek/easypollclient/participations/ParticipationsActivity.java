@@ -2,16 +2,19 @@ package ch.netgeek.easypollclient.participations;
 
 import java.util.ArrayList;
 
-import ch.netgeek.easypollclient.EasyPollClientActivity;
 import ch.netgeek.easypollclient.R;
 import ch.netgeek.easypollclient.web.WebGateway;
 import ch.netgeek.easypollclient.polls.*;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +66,39 @@ public class ParticipationsActivity extends Activity {
         TextView questionText = (TextView) findViewById(R.id.text_view_participations_question_text);
         questionText.setText(question.getText());
         
+        // Setting the Options in linear_layout_participations_question_options
+        ArrayList<Option> options = question.getOptions();
+        LinearLayout optionsLayout = (LinearLayout) findViewById(R.id.linear_layout_participations_question_options);
+        optionsLayout.removeAllViews();
+        if (question.getKind().equals("multiple choice")) {
+            for (int i = 0; i < options.size(); i++) {
+                Option option = options.get(i);
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setId(i + 1000);
+                checkBox.setTag("option " + String.valueOf(i));
+                checkBox.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+                checkBox.setText(option.getText());
+                checkBox.setChecked(option.isChecked());
+                optionsLayout.addView(checkBox);
+            }
+        } else {
+            RadioGroup radioGroup = new RadioGroup(this);
+            radioGroup.setId(999);
+            radioGroup.setTag("radio group " + 999);
+            radioGroup.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            for (int i = 0; i < options.size(); i++) {
+                Option option = options.get(i);
+                RadioButton radioButton = new RadioButton(this);
+                radioButton.setId(i + 1000);
+                radioButton.setTag("option " + String.valueOf(i));
+                radioButton.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+                radioButton.setText(option.getText());
+                radioButton.setChecked(option.isChecked());
+                radioGroup.addView(radioButton);
+            }
+            optionsLayout.addView(radioGroup);
+        }
+        
         // Setting Button text and event listeners
         setButtons();
         
@@ -76,8 +112,7 @@ public class ParticipationsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (currentQuestionIndex != 0) {
-                    currentQuestionIndex--;
-                    displayGui();
+                    back();
                 }
                 
             }
@@ -96,8 +131,7 @@ public class ParticipationsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (currentQuestionIndex < lastQuestionIndex) {
-                    currentQuestionIndex++;
-                    displayGui();
+                    next();
                 } else {
                     finishParticipation();
                 }
@@ -106,8 +140,73 @@ public class ParticipationsActivity extends Activity {
         });
     }
     
+    private boolean validOptionState() {
+        boolean state = false;
+        Question question = questions.get(currentQuestionIndex);
+        ArrayList<Option> options = question.getOptions();
+        for (int i = 0; i < options.size(); i++) {
+            if (question.getKind().equals("multiple choice")) {
+                CheckBox checkBox = (CheckBox) findViewById(i + 1000);
+                if (checkBox.getTag().equals("option " + String.valueOf(i))) {
+                    if (checkBox.isChecked()) {
+                        state = true;
+                        break;
+                    }
+                }
+            } else {
+                RadioButton radioButton = (RadioButton) findViewById(i + 1000);
+                if (radioButton.getTag().equals("option " + String.valueOf(i))) {
+                    if (radioButton.isChecked()) {
+                        state = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return state;
+    }
+    
+    private void saveOptionState() {
+        Question question = questions.get(currentQuestionIndex);
+        ArrayList<Option> options = question.getOptions();
+        for (int i = 0; i < options.size(); i++) {
+            Option option = options.get(i);
+            if (question.getKind().equals("multiple choice")) {
+                CheckBox checkBox = (CheckBox) findViewById(i + 1000);
+                if (checkBox.getTag().equals("option " + String.valueOf(i))) {
+                    option.setChecked(checkBox.isChecked());
+                }
+            } else {
+                RadioButton radioButton = (RadioButton) findViewById(i + 1000);
+                if (radioButton.getTag().equals("option " + String.valueOf(i))) {
+                    option.setChecked(radioButton.isChecked());
+                }
+            }
+        }
+    }
+    
+    private void back() {
+        saveOptionState();
+        currentQuestionIndex--;
+        displayGui();
+    }
+    
+    private void next() {
+        if (validOptionState()) {
+            saveOptionState();
+            currentQuestionIndex++;
+            displayGui();
+        } else {
+            Toast.makeText(this, "Please make a selection", Toast.LENGTH_SHORT).show();
+        }
+    }
+    
     private void finishParticipation() {
-        Toast.makeText(this, "Finish button pressed", Toast.LENGTH_SHORT).show();
+        if (validOptionState()) {
+            saveOptionState();
+            Toast.makeText(this, "Finish button pressed", Toast.LENGTH_SHORT).show();
+        }
     }
     
     public void cancel(View v) {
