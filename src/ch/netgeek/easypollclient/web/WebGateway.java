@@ -218,6 +218,7 @@ public class WebGateway {
         String publishedAtTag = "published_at";
         String categoryTag = "category";
         String userNameTag = "user_name";
+        String myUserIdTag = "my_user_id";
         String questionsCountTag = "questions_count";
         String participationsCountTag = "participations_count";
         String questionsTag = "questions";
@@ -236,10 +237,12 @@ public class WebGateway {
         Date publishedAt = Date.valueOf(root.getChildText(publishedAtTag));
         String category = root.getChildText(categoryTag);
         String userName = root.getChildText(userNameTag);
+        int myUserId = Integer.valueOf(root.getChildText(myUserIdTag));
         int questionsCount = Integer.valueOf(root.getChildText(questionsCountTag));
         int participationsCount = Integer.valueOf(root.getChildText(participationsCountTag));
         
         Poll poll = new Poll(id, title, publishedAt, category, userName, questionsCount, participationsCount);
+        poll.setMyUserId(myUserId);
         
         // Parsing the questions of the poll
         Element questionsElement = root.getChild(questionsTag);
@@ -308,7 +311,8 @@ public class WebGateway {
             // Poll ID
             nameValuePairs.add(new BasicNameValuePair("participation[poll][poll_id]", String.valueOf(poll.getPollId())));
             
-            //TODO User id
+            // User ID
+            nameValuePairs.add(new BasicNameValuePair("participation[poll][user_id]", String.valueOf(poll.getMyUserId())));
             
             ArrayList<Question> questions = poll.getQuestions();
             

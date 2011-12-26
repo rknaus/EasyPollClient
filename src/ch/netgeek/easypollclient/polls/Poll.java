@@ -10,6 +10,7 @@ public class Poll {
     private Date publishedAt;
     private String category;
     private String userName;
+    private int myUserId;
     private int questionsCount;
     private int participationsCount;
     private ArrayList<Question> questions;
@@ -71,6 +72,14 @@ public class Poll {
     
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    
+    public int getMyUserId() {
+        return myUserId;
+    }
+    
+    public void setMyUserId(int myUserId) {
+        this.myUserId = myUserId;
     }
     
     public int getQuestionsCount() {
