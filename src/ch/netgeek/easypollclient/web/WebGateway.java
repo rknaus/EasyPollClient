@@ -320,7 +320,6 @@ public class WebGateway {
                 nameValuePairs.add(new BasicNameValuePair("participation[poll][questions_attributes][" + i + "][id]", String.valueOf(question.getQuestionId())));
                 
                 ArrayList<Option> options = question.getOptions();
-                int selections = 0;
                 
                 for (int k = 0; k < options.size(); k++) {
                     
@@ -331,8 +330,7 @@ public class WebGateway {
                     if (option.isChecked()) {
                         
                         // If Option is checked
-                        nameValuePairs.add(new BasicNameValuePair(String.valueOf(question.getQuestionId()) + "[" + selections + "]", String.valueOf(option.getOptionId())));
-                        selections++;
+                        nameValuePairs.add(new BasicNameValuePair(String.valueOf(question.getQuestionId()) + "[]", String.valueOf(option.getOptionId())));
                     }
                 }
                 
