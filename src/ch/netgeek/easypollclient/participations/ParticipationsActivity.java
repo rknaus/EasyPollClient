@@ -205,7 +205,15 @@ public class ParticipationsActivity extends Activity {
     private void finishParticipation() {
         if (validOptionState()) {
             saveOptionState();
-            Toast.makeText(this, "Finish button pressed", Toast.LENGTH_SHORT).show();
+            if (webGateway.postParticipation(poll)) {
+                Toast.makeText(this, "Saved...", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, PollsActivity.class));
+            } else {
+                Toast.makeText(this, "Error saving the results...", Toast.LENGTH_SHORT).show();
+            }
+            
+        } else {
+            Toast.makeText(this, "Please make a selection", Toast.LENGTH_SHORT).show();
         }
     }
     

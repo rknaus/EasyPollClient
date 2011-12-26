@@ -291,4 +291,72 @@ public class WebGateway {
         return poll;
     }
     
+    public boolean postParticipation(Poll poll) {
+        
+        if (login() == false) {
+            Toast.makeText(context, "Login Failure!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        
+        try {
+            
+            HttpPost httppost = new HttpPost(serverUrl + "participations");
+            
+            // Adding the participation data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            
+            // Poll ID
+            nameValuePairs.add(new BasicNameValuePair("participation[poll][poll_id]", String.valueOf(poll.getPollId())));
+            
+            //TODO User id
+            
+            ArrayList<Question> questions = poll.getQuestions();
+            
+            for (int i = 0; i < questions.size(); i++) {
+                
+                Question question = questions.get(i);
+                
+                // Question ID
+                nameValuePairs.add(new BasicNameValuePair("participation[poll][questions_attributes][" + i + "][id]", String.valueOf(question.getQuestionId())));
+                
+                ArrayList<Option> options = question.getOptions();
+                int selections = 0;
+                
+                for (int k = 0; k < options.size(); k++) {
+                    
+                    Option option = options.get(k);
+                    
+                    // Option ID
+                    nameValuePairs.add(new BasicNameValuePair("participation[poll][questions_attributes][" + i + "][options_attributes][" + k + "][id]", String.valueOf(option.getOptionId())));
+                    if (option.isChecked()) {
+                        
+                        // If Option is checked
+                        nameValuePairs.add(new BasicNameValuePair(String.valueOf(question.getQuestionId()) + "[" + selections + "]", String.valueOf(option.getOptionId())));
+                        selections++;
+                    }
+                }
+                
+            }
+            
+            // Answer button
+            nameValuePairs.add(new BasicNameValuePair("answer_button", "Answer"));
+
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP post request
+            httpclient.execute(httppost, localContext);
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return false;
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        
+        
+        return true;
+    }
+    
 }
