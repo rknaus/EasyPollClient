@@ -23,7 +23,6 @@ public class ParticipationsActivity extends Activity {
     private WebGateway webGateway;
     private Poll poll;
     private ArrayList<Question> questions;
-    private Participation participation;
     private int currentQuestionIndex;
     private int lastQuestionIndex;
 
