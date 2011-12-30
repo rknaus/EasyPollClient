@@ -11,6 +11,7 @@ public class Poll {
     private String category;
     private String userName;
     private int myUserId;
+    private boolean answered;
     private int questionsCount;
     private int participationsCount;
     private ArrayList<Question> questions;
@@ -82,6 +83,14 @@ public class Poll {
         this.myUserId = myUserId;
     }
     
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(boolean answered) {
+        this.answered = answered;
+    }
+
     public int getQuestionsCount() {
         return questionsCount;
     }

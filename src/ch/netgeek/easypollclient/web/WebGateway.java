@@ -137,6 +137,7 @@ public class WebGateway {
         String pollPublishedAtTag = "published_at";
         String pollCategoryTag = "category";
         String pollUserNameTag = "user_name";
+        String pollAnsweredTag = "answered";
         String pollQuestionsCountTag = "questions_count";
         String pollParticipationsCountTag = "participations_count";
         
@@ -157,11 +158,14 @@ public class WebGateway {
             Date publishedAt = Date.valueOf(pollElement.getChildText(pollPublishedAtTag));
             String category = pollElement.getChildText(pollCategoryTag);
             String userName = pollElement.getChildText(pollUserNameTag);
+            boolean answered = Boolean.parseBoolean(pollElement.getChildText(pollAnsweredTag));
             int questionsCount = Integer.valueOf(pollElement.getChildText(pollQuestionsCountTag));
             int participationsCount = Integer.valueOf(pollElement.getChildText(pollParticipationsCountTag));
             
-            polls.add(new Poll(pollId, title, publishedAt, category, userName, 
-                    questionsCount, participationsCount));
+            Poll poll = new Poll(pollId, title, publishedAt, category, userName, questionsCount, participationsCount);
+            poll.setAnswered(answered);
+            
+            polls.add(poll);
         }
         
         if (polls.isEmpty()) {
