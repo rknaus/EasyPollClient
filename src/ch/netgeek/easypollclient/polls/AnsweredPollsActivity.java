@@ -29,6 +29,11 @@ public class AnsweredPollsActivity extends ListActivity {
         
         // Getting the list content
         webGateway = new WebGateway(this);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
         polls = webGateway.getAnsweredPolls();
         
         if (polls == null) {

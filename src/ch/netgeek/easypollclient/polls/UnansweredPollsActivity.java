@@ -30,6 +30,11 @@ public class UnansweredPollsActivity extends ListActivity {
         
         // Getting the list content
         webGateway = new WebGateway(this);
+    }
+    
+    @Override
+    protected void onResume() {
+        super.onResume();
         polls = webGateway.getUnansweredPolls();
         
         if (polls == null) {
