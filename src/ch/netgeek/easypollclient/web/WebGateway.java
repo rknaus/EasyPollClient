@@ -91,7 +91,7 @@ public class WebGateway {
         
     }
     
-    public ArrayList<Poll> getPolls() {
+    private ArrayList<Poll> getPolls() {
         
         ArrayList<Poll> polls = new ArrayList<Poll>();
         
@@ -173,6 +173,36 @@ public class WebGateway {
         }
         
         return polls;
+    }
+    
+    public ArrayList<Poll> getUnansweredPolls() {
+        ArrayList<Poll> polls = getPolls();
+        ArrayList<Poll> unansweredPolls = new ArrayList<Poll>();
+        if (polls == null) {
+            return null;
+        }
+        for (int i = 0; i < polls.size(); i++) {
+            Poll poll = polls.get(i);
+            if (!poll.isAnswered()) {
+                unansweredPolls.add(poll);
+            }
+        }
+        return unansweredPolls;
+    }
+    
+    public ArrayList<Poll> getAnsweredPolls() {
+        ArrayList<Poll> polls = getPolls();
+        ArrayList<Poll> answeredPolls = new ArrayList<Poll>();
+        if (polls == null) {
+            return null;
+        }
+        for (int i = 0; i < polls.size(); i++) {
+            Poll poll = polls.get(i);
+            if (poll.isAnswered()) {
+                answeredPolls.add(poll);
+            }
+        }
+        return answeredPolls;
     }
     
     public Poll getPoll(int pollId) {

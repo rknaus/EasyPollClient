@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.netgeek.easypollclient.R;
-import ch.netgeek.easypollclient.participations.ParticipationsActivity;
 import ch.netgeek.easypollclient.web.WebGateway;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class PollsActivity extends ListActivity {
+public class AnsweredPollsActivity extends ListActivity {
     
     private WebGateway webGateway;
     private ArrayList<Poll> polls;
@@ -30,20 +29,19 @@ public class PollsActivity extends ListActivity {
         
         // Getting the list content
         webGateway = new WebGateway(this);
-        polls = webGateway.getPolls();
+        polls = webGateway.getAnsweredPolls();
         
         if (polls == null) {
             polls = new ArrayList<Poll>();
         }
         
-        setListAdapter(new MyCustomAdapter(PollsActivity.this, R.layout.polls_list_item, polls));
+        setListAdapter(new MyCustomAdapter(AnsweredPollsActivity.this, R.layout.polls_list_item, polls));
     }
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(this, ParticipationsActivity.class);
-        intent.putExtra("poll_id", polls.get(position).getPollId());
-        startActivity(intent);
+        //TODO Add a details view
+        Toast.makeText(this, "Details view not yet implemented", Toast.LENGTH_SHORT).show();
     }
     
     public class MyCustomAdapter extends ArrayAdapter<Poll> {

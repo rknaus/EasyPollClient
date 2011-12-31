@@ -2,6 +2,7 @@ package ch.netgeek.easypollclient.participations;
 
 import java.util.ArrayList;
 
+import ch.netgeek.easypollclient.EasyPollClientActivity;
 import ch.netgeek.easypollclient.R;
 import ch.netgeek.easypollclient.web.WebGateway;
 import ch.netgeek.easypollclient.polls.*;
@@ -39,7 +40,7 @@ public class ParticipationsActivity extends Activity {
         
         if (poll == null) {
             Toast.makeText(this, "Error displaying the requested poll", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, PollsActivity.class));
+            startActivity(new Intent(this, EasyPollClientActivity.class));
         }
         questions = poll.getQuestions();
         
@@ -206,7 +207,7 @@ public class ParticipationsActivity extends Activity {
             saveOptionState();
             if (webGateway.postParticipation(poll)) {
                 Toast.makeText(this, "Saved...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, PollsActivity.class));
+                startActivity(new Intent(this, EasyPollClientActivity.class));
             } else {
                 Toast.makeText(this, "Error saving the results...", Toast.LENGTH_SHORT).show();
             }
@@ -217,6 +218,6 @@ public class ParticipationsActivity extends Activity {
     }
     
     public void cancel(View v) {
-        startActivity(new Intent(this, PollsActivity.class));
+        startActivity(new Intent(this, EasyPollClientActivity.class));
     }
 }
