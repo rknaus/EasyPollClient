@@ -91,8 +91,7 @@ public class WebGateway {
         
     }
     
-    private ArrayList<Poll> getPolls() {
-        
+    private ArrayList<Poll> getPolls(String url) {
         ArrayList<Poll> polls = new ArrayList<Poll>();
         
         if (login() == false) {
@@ -104,7 +103,7 @@ public class WebGateway {
         String xmlResponse;
         
         try {
-            HttpGet httpget = new HttpGet(serverUrl + "polls.xml");
+            HttpGet httpget = new HttpGet(serverUrl + url);
             HttpResponse response = httpclient.execute(httpget, localContext);
             xmlResponse = EntityUtils.toString(response.getEntity());
 
@@ -137,7 +136,6 @@ public class WebGateway {
         String pollPublishedAtTag = "published_at";
         String pollCategoryTag = "category";
         String pollUserNameTag = "user_name";
-        String pollAnsweredTag = "answered";
         String pollQuestionsCountTag = "questions_count";
         String pollParticipationsCountTag = "participations_count";
         
@@ -158,13 +156,10 @@ public class WebGateway {
             Date publishedAt = Date.valueOf(pollElement.getChildText(pollPublishedAtTag));
             String category = pollElement.getChildText(pollCategoryTag);
             String userName = pollElement.getChildText(pollUserNameTag);
-            boolean answered = Boolean.parseBoolean(pollElement.getChildText(pollAnsweredTag));
             int questionsCount = Integer.valueOf(pollElement.getChildText(pollQuestionsCountTag));
             int participationsCount = Integer.valueOf(pollElement.getChildText(pollParticipationsCountTag));
             
             Poll poll = new Poll(pollId, title, publishedAt, category, userName, questionsCount, participationsCount);
-            poll.setAnswered(answered);
-            
             polls.add(poll);
         }
         
@@ -176,33 +171,11 @@ public class WebGateway {
     }
     
     public ArrayList<Poll> getUnansweredPolls() {
-        ArrayList<Poll> polls = getPolls();
-        ArrayList<Poll> unansweredPolls = new ArrayList<Poll>();
-        if (polls == null) {
-            return null;
-        }
-        for (int i = 0; i < polls.size(); i++) {
-            Poll poll = polls.get(i);
-            if (!poll.isAnswered()) {
-                unansweredPolls.add(poll);
-            }
-        }
-        return unansweredPolls;
+        return getPolls("polls/index_unanswered.xml");
     }
     
     public ArrayList<Poll> getAnsweredPolls() {
-        ArrayList<Poll> polls = getPolls();
-        ArrayList<Poll> answeredPolls = new ArrayList<Poll>();
-        if (polls == null) {
-            return null;
-        }
-        for (int i = 0; i < polls.size(); i++) {
-            Poll poll = polls.get(i);
-            if (poll.isAnswered()) {
-                answeredPolls.add(poll);
-            }
-        }
-        return answeredPolls;
+        return getPolls("polls/index_answered.xml");
     }
     
     public Poll getPoll(int pollId) {
