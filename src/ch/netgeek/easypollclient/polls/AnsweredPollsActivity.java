@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.netgeek.easypollclient.R;
+import ch.netgeek.easypollclient.results.ResultsActivity;
 import ch.netgeek.easypollclient.web.WebGateway;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AnsweredPollsActivity extends ListActivity {
     
@@ -45,8 +46,9 @@ public class AnsweredPollsActivity extends ListActivity {
     
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        //TODO Add a details view
-        Toast.makeText(this, "Details view not yet implemented", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ResultsActivity.class);
+        intent.putExtra("poll_id", polls.get(position).getPollId());
+        startActivity(intent);
     }
     
     public class MyCustomAdapter extends ArrayAdapter<Poll> {

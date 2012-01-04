@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+    
+    <TextView 
+        android:id="@+id/text_view_results_title"  
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:layout_height="wrap_content" 
+        android:layout_width="fill_parent" 
+        android:padding="4dip" />
+    
+    <TableLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_category_title_text"
+                android:text="@string/results_poll_category_title_text" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_category_text" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_created_by_title_text"
+                android:text="@string/results_poll_created_by_title_text" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_created_by_text" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_published_at_title_text"
+                android:text="@string/results_poll_published_at_title_text" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_published_at_text" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_closed_at_title_text"
+                android:text="@string/results_poll_closed_at_title_text" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_closed_at_text" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_questions_title_text"
+                android:text="@string/results_poll_questions_title_text" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_questions_text" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_participations_title_text"
+                android:text="@string/results_poll_participations_title_text" />
+            <TextView
+                android:layout_column="1"
+                android:id="@+id/text_view_results_poll_participations_text" />
+        </TableRow>
+        
+    </TableLayout>
+
+    <ListView android:id="@android:id/list"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="true" />
+        
+    <TextView android:id="@android:id/empty"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="No polls" />
+        
+    <Button
+        android:layout_width="fill_parent"
+        android:id="@+id/button_results_back"
+        android:text="@string/results_back_button"
+        android:layout_height="wrap_content" 
+        android:padding="4dip"
+        android:onClick="back">
+    </Button>
+
+</LinearLayout>

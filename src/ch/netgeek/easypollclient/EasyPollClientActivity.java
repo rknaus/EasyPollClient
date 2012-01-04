@@ -44,7 +44,7 @@ public class EasyPollClientActivity extends TabActivity {
         SettingsManager settingsManager = new SettingsManager(this);
         Setting setting = settingsManager.readSettings();
         if (setting != null && setting.isValid()) {
-            tabHost.setCurrentTab(0);
+            tabHost.setCurrentTab(getIntent().getIntExtra("tab_id", 0));
         } else {
             Toast.makeText(this, "Please complete the settings", Toast.LENGTH_LONG).show();
             tabHost.setCurrentTab(2);

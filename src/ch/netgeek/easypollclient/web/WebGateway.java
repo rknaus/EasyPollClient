@@ -301,6 +301,148 @@ public class WebGateway {
         return poll;
     }
     
+    public Poll getResults(int pollId) {
+        
+        if (login() == false) {
+            Toast.makeText(context, "Login Failure!", Toast.LENGTH_LONG).show();
+            return null;
+        }
+        
+        // Getting the polls list via HTTP
+        String xmlResponse;
+        
+        try {
+            HttpGet httpget = new HttpGet(serverUrl + "polls/" + String.valueOf(pollId) + "/show_results.xml");
+            HttpResponse response = httpclient.execute(httpget, localContext);
+            xmlResponse = EntityUtils.toString(response.getEntity());
+
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            return null;
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        if (xmlResponse.contains("invalid poll id")) {
+            return null;
+        }
+        
+        // Parsing the XML response
+        Element root = null;
+        
+        try {
+            SAXBuilder builder = new SAXBuilder();
+            Document doc = builder.build(new StringReader(xmlResponse));
+            root = doc.getRootElement();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
+        // iterating over the child elements of xml <poll>
+        String idTag = "id";
+        String titleTag = "title";
+        String publishedAtTag = "published_at";
+        String closedAtTag = "closed_at";
+        String categoryTag = "category";
+        String userNameTag = "user_name";
+        String myUserIdTag = "my_user_id";
+        String questionsCountTag = "questions_count";
+        String participationsCountTag = "participations_count";
+        String questionsTag = "questions";
+        String questionTag = "question";
+        String questionIdTag = "id";
+        String questionTextTag = "text";
+        String questionKindTag = "kind";
+        String optionsTag = "options";
+        String optionTag = "option";
+        String optionIdTag = "id";
+        String optionTextTag = "text";
+        String optionAnswersCountTag = "answers_count";
+        String optionAnswersPercentTag = "answers_percent"; 
+        
+        // Parsing the poll details
+        int id = Integer.valueOf(root.getChildText(idTag));
+        String title = root.getChildText(titleTag);
+        Date publishedAt = Date.valueOf(root.getChildText(publishedAtTag));
+        String closedAtText = root.getChildText(closedAtTag);
+        Date closedAt = null;
+        if (!closedAtText.equals("")) {
+            closedAt = Date.valueOf(closedAtText);
+        }
+        String category = root.getChildText(categoryTag);
+        String userName = root.getChildText(userNameTag);
+        int myUserId = Integer.valueOf(root.getChildText(myUserIdTag));
+        int questionsCount = Integer.valueOf(root.getChildText(questionsCountTag));
+        int participationsCount = Integer.valueOf(root.getChildText(participationsCountTag));
+        
+        Poll poll = new Poll(id, title, publishedAt, category, userName, questionsCount, participationsCount);
+        poll.setClosedAt(closedAt);
+        poll.setMyUserId(myUserId);
+        
+        
+        // Parsing the questions of the poll
+        Element questionsElement = root.getChild(questionsTag);
+
+        if (questionsElement == null) {
+            return null;
+        }
+        List<?> questionElementList = questionsElement.getChildren(questionTag);
+        
+        if (questionElementList == null) {
+            return null;
+        }
+        Iterator<?> questionIterator = questionElementList.iterator();
+        
+        while (questionIterator.hasNext()) {
+            Element questionElement = (Element) questionIterator.next();
+            
+            int questionId = Integer.valueOf(questionElement.getChildText(questionIdTag));
+            String questionText = questionElement.getChildText(questionTextTag);
+            String questionKind = questionElement.getChildText(questionKindTag);
+            
+            Question question = new Question(questionId, questionText, questionKind);
+            
+            Element optionsElement = questionElement.getChild(optionsTag);
+            
+            if (optionsElement == null) {
+                return null;
+            }
+            List<?> optionElementList = optionsElement.getChildren(optionTag);
+            
+            if (optionElementList == null) {
+                return null;
+            }
+            Iterator<?> optionIterator = optionElementList.iterator();
+            
+            // Parsing the options of the question
+            while (optionIterator.hasNext()) {
+              Element optionElement = (Element) optionIterator.next();
+              
+              int optionId = Integer.valueOf(optionElement.getChildText(optionIdTag));
+              String optionText = optionElement.getChildText(optionTextTag);
+              int optionAnswersCount = Integer.valueOf(optionElement.getChildText(optionAnswersCountTag));
+              String optionAnswersPercentText = optionElement.getChildText(optionAnswersPercentTag);
+              double optionAnswersPercent = 0;
+              if (optionAnswersPercentText != "") {
+                  optionAnswersPercent = Double.valueOf(optionAnswersPercentText);
+              }
+              Option option = new Option(optionId, optionText);
+              option.setAnswersCount(optionAnswersCount);
+              option.setAnswersPercent(optionAnswersPercent);
+
+              question.addOption(option);
+            }
+            
+            poll.addQuestion(question);
+        }
+        
+        return poll;
+    }
+    
     public boolean postParticipation(Poll poll) {
         
         if (login() == false) {

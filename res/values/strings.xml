@@ -10,4 +10,12 @@
     <string name="participations_back_button">Back</string>
     <string name="participations_cancel_button">Cancel</string>
     <string name="participations_next_button">Next</string>
+    <string name="results_poll_category_title_text">Category </string>
+    <string name="results_poll_created_by_title_text">Created by </string>
+    <string name="results_poll_published_at_title_text">Published at </string>
+    <string name="results_poll_closed_at_title_text">Closed at </string>
+    <string name="results_poll_questions_title_text">Questions</string>
+    <string name="results_poll_participations_title_text">Participations </string>
+    <string name="results_poll_questions_answer_title_text">Answers</string>
+    <string name="results_back_button">Back</string>
 </resources>

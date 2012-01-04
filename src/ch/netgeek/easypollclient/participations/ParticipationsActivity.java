@@ -40,7 +40,7 @@ public class ParticipationsActivity extends Activity {
         
         if (poll == null) {
             Toast.makeText(this, "Error displaying the requested poll", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, EasyPollClientActivity.class));
+            exit();
         }
         questions = poll.getQuestions();
         
@@ -207,7 +207,7 @@ public class ParticipationsActivity extends Activity {
             saveOptionState();
             if (webGateway.postParticipation(poll)) {
                 Toast.makeText(this, "Saved...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, EasyPollClientActivity.class));
+                exit();
             } else {
                 Toast.makeText(this, "Error saving the results...", Toast.LENGTH_SHORT).show();
             }
@@ -218,6 +218,12 @@ public class ParticipationsActivity extends Activity {
     }
     
     public void cancel(View v) {
-        startActivity(new Intent(this, EasyPollClientActivity.class));
+        exit();
+    }
+    
+    private void exit() {
+        Intent intent = new Intent(this, EasyPollClientActivity.class);
+        intent.putExtra("tab_id", 0);
+        startActivity(intent);
     }
 }

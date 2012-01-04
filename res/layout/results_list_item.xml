@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="5dip">
+    
+    <TextView 
+        android:id="@+id/text_view_results_item_title"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    
+    <TextView 
+        android:id="@+id/text_view_results_item_kind"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textSize="16sp" />
+    
+    <TextView 
+        android:id="@+id/text_view_results_item_answers_title"
+        android:text="@string/results_poll_questions_answer_title_text"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:textSize="16sp" 
+        android:textStyle="bold" />
+    
+    <TableLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/answers_table" />
+    
+</LinearLayout>

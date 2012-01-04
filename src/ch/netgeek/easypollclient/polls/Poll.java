@@ -8,6 +8,7 @@ public class Poll {
     private int pollId;
     private String title;
     private Date publishedAt;
+    private Date closedAt;
     private String category;
     private String userName;
     private int myUserId;
@@ -56,6 +57,14 @@ public class Poll {
     
     public void setPublishedAt(Date publishedAt) {
         this.publishedAt = publishedAt;
+    }
+    
+    public Date getClosedAt() {
+        return closedAt;
+    }
+    
+    public void setClosedAt(Date closedAt) {
+        this.closedAt = closedAt;
     }
     
     public String getCategory() {
