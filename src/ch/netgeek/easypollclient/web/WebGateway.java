@@ -39,7 +39,7 @@ public class WebGateway {
     private String serverUrl;
     private String username;
     private String password;
-    private DefaultHttpClient httpclient;
+    private DefaultHttpClient httpClient;
     private CookieStore cookieStore;
     private HttpContext localContext;
     
@@ -51,7 +51,7 @@ public class WebGateway {
         username = setting.getUsername();
         password = setting.getPassword();
         
-        httpclient = new DefaultHttpClient();
+        httpClient = new DefaultHttpClient();
         cookieStore = new BasicCookieStore();
         localContext = new BasicHttpContext();
         localContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
@@ -71,7 +71,7 @@ public class WebGateway {
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP post request
-            HttpResponse response = httpclient.execute(httppost, localContext);
+            HttpResponse response = httpClient.execute(httppost, localContext);
             String xmlResponse = EntityUtils.toString(response.getEntity());
             
             if (xmlResponse.contains("Invalid email or password")) {
@@ -104,7 +104,7 @@ public class WebGateway {
         
         try {
             HttpGet httpget = new HttpGet(serverUrl + url);
-            HttpResponse response = httpclient.execute(httpget, localContext);
+            HttpResponse response = httpClient.execute(httpget, localContext);
             xmlResponse = EntityUtils.toString(response.getEntity());
 
         } catch (ClientProtocolException e) {
@@ -190,7 +190,7 @@ public class WebGateway {
         
         try {
             HttpGet httpget = new HttpGet(serverUrl + "polls/" + String.valueOf(pollId) + ".xml");
-            HttpResponse response = httpclient.execute(httpget, localContext);
+            HttpResponse response = httpClient.execute(httpget, localContext);
             xmlResponse = EntityUtils.toString(response.getEntity());
 
         } catch (ClientProtocolException e) {
@@ -313,7 +313,7 @@ public class WebGateway {
         
         try {
             HttpGet httpget = new HttpGet(serverUrl + "polls/" + String.valueOf(pollId) + "/show_results.xml");
-            HttpResponse response = httpclient.execute(httpget, localContext);
+            HttpResponse response = httpClient.execute(httpget, localContext);
             xmlResponse = EntityUtils.toString(response.getEntity());
 
         } catch (ClientProtocolException e) {
@@ -495,7 +495,7 @@ public class WebGateway {
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP post request
-            httpclient.execute(httppost, localContext);
+            httpClient.execute(httppost, localContext);
 
         } catch (ClientProtocolException e) {
             e.printStackTrace();
