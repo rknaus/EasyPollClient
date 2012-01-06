@@ -51,19 +51,4 @@ public class EasyPollClientActivity extends TabActivity {
         }
         
     }
-    
-    public void polls(View v) {
-        
-        SettingsManager settingsManager = new SettingsManager(this);
-        Setting setting = settingsManager.readSettings();
-        if (setting != null && setting.isValid()) {
-            startActivity(new Intent(this, UnansweredPollsActivity.class));
-        } else {
-            Toast.makeText(this, "Please complete the settings", Toast.LENGTH_LONG).show();
-        }
-    }
-    
-    public void settings(View v) {
-        startActivity(new Intent(this, SettingsActivity.class));
-    }
 }
